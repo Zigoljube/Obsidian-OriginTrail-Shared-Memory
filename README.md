@@ -2,6 +2,20 @@
 
 Obsidian plugin for turning an Obsidian vault into an OriginTrail DKG v10 Project and syncing Markdown notes into DKG memory.
 
+## Start here
+
+If you are new to Obsidian, OriginTrail DKG, or both, follow the full beginner journey:
+
+[Fresh user journey: Obsidian + OriginTrail DKG + Shared Memory plugin](INSTALL.md)
+
+That guide covers:
+
+- installing Obsidian
+- installing and starting OriginTrail DKG v10 from <https://github.com/OriginTrail/dkg>
+- installing this plugin into a vault
+- configuring the DKG connection
+- powering up a vault into a DKG Project
+
 ## MVP flow
 
 1. Open or create an Obsidian vault.
