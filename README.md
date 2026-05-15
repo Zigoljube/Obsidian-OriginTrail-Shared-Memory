@@ -103,6 +103,9 @@ Once the vault is powered up, auto-sync is enabled for that vault.
 - Each synced note version gets a content-aware assertion name derived from the vault ID, note path, note content, and sync timestamp.
 - By default, updates go to **Working Memory** first. If Shared Memory promotion is enabled, the assertion is also promoted to **Shared Memory**.
 
+- <img width="1280" height="656" alt="photo_2026-05-15_17-22-38" src="https://github.com/user-attachments/assets/2f4e5614-28b5-41b2-9e5b-f2e1dcde4bff" />
+
+
 This means every saved edit can become a new memory update in the vault's DKG Context Graph. Obsidian stays local-first and comfortable for writing, while OriginTrail DKG keeps receiving the latest knowledge from the vault.
 
 ## Sharing access to the Context Graph
@@ -118,6 +121,9 @@ In practice, this means:
 - collaborators can be given access to the Context Graph instead of receiving copied notes manually
 - promoted knowledge can become **Shared Memory** for that project
 - teams and agents can build on the same continuously updated context as the vault evolves
+
+- <img width="1280" height="659" alt="photo_2026-05-15_17-22-38 (2)" src="https://github.com/user-attachments/assets/3a97a73c-edf6-4966-b0aa-070dd6bd7dae" />
+
 
 This is where a personal second brain can become shared memory: start locally in Obsidian, power up the vault into a DKG Project, sync notes into memory, keep edits flowing into the graph, and then share access to that Context Graph with others.
 
