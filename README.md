@@ -76,6 +76,35 @@ That guide covers:
 
 Unlinked vaults show a first-run prompt that offers to power up the vault without automatically ingesting notes before the user opts in.
 
+## What a successful cycle looks like
+
+After the vault is powered up, the plugin completes a full Obsidian-to-DKG cycle:
+
+1. **A DKG Project is created or linked from the vault name.**
+   If the Obsidian vault is called `Research Notes`, the plugin creates or connects to a DKG Context Graph/Project using that name.
+2. **The vault becomes linked to that Context Graph.**
+   The selected Context Graph ID is stored in the vault's local plugin settings, so future syncs know exactly where the vault belongs.
+3. **Existing Markdown notes are imported.**
+   Every Markdown file in the vault, except Obsidian internals and trash folders, is sent to DKG Working Memory as an assertion.
+4. **DKG extraction runs for each note.**
+   The DKG node processes the Markdown and turns the note content into graph memory inside the created Context Graph.
+5. **The user gets a completion notice.**
+   When the cycle finishes, Obsidian reports how many notes were synced and whether they stayed in Working Memory or were promoted to Shared Memory.
+
+At the end of this cycle, the Obsidian vault and the DKG Context Graph are connected: the vault remains the writing interface, while the DKG Project becomes the shared memory layer for that vault's knowledge.
+
+## How edits keep the DKG updated
+
+Once the vault is powered up, auto-sync is enabled for that vault.
+
+- When a Markdown note is edited and saved, Obsidian emits a file-change event.
+- The plugin waits briefly using a debounce, so it does not sync on every keystroke.
+- The changed note is imported again into the same DKG Context Graph created for the vault.
+- Each synced note version gets a content-aware assertion name derived from the vault ID, note path, note content, and sync timestamp.
+- By default, updates go to **Working Memory** first. If Shared Memory promotion is enabled, the assertion is also promoted to **Shared Memory**.
+
+This means every saved edit can become a new memory update in the vault's DKG Context Graph. Obsidian stays local-first and comfortable for writing, while OriginTrail DKG keeps receiving the latest knowledge from the vault.
+
 ## Development
 
 ```bash
