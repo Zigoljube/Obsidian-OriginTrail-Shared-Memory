@@ -1,0 +1,7 @@
+.origintrail-sm-status {
+  font-size: var(--font-ui-smaller);
+}
+
+.origintrail-sm-muted {
+  color: var(--text-muted);
+}
