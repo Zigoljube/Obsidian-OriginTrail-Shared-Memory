@@ -5,21 +5,6 @@ Obsidian plugin for turning an Obsidian vault into an OriginTrail DKG v10 Projec
 
 <img width="1672" height="941" alt="ChatGPT Image May 15, 2026 at 01_19_06 PM" src="https://github.com/user-attachments/assets/3c154fc8-c2de-4f2e-9d3b-13be73e44d02" />
 
-
-## Start here
-
-If you are new to Obsidian, OriginTrail DKG, or both, follow the full beginner journey:
-
-[Fresh user journey: Obsidian + OriginTrail DKG + Shared Memory plugin](INSTALL.md)
-
-That guide covers:
-
-- installing Obsidian
-- installing and starting OriginTrail DKG v10 from <https://github.com/OriginTrail/dkg>
-- installing this plugin into a vault
-- configuring the DKG connection
-- powering up a vault into a DKG Project
-
 ## Why use it?
 
 Obsidian is already one of the best tools for building a personal knowledge base:
@@ -60,6 +45,22 @@ Shared memory asks: **What can we know, trust, and build together?**
 
 The future of knowledge work is not just better private notes. It is shared,
 verifiable intelligence.
+
+
+## Start here
+
+If you are new to Obsidian, OriginTrail DKG, or both, follow the full beginner journey:
+
+[Fresh user journey: Obsidian + OriginTrail DKG + Shared Memory plugin](INSTALL.md)
+
+That guide covers:
+
+- installing Obsidian
+- installing and starting OriginTrail DKG v10 from <https://github.com/OriginTrail/dkg>
+- installing this plugin into a vault
+- configuring the DKG connection
+- powering up a vault into a DKG Project
+
 
 ## MVP flow
 
