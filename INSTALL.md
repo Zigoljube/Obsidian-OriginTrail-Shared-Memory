@@ -109,7 +109,17 @@ dkg auth status
 dkg auth show
 ```
 
-You will need the auth token from `dkg auth show` when configuring the Obsidian plugin.
+You will need the auth token from `dkg auth show` when configuring the Obsidian plugin. Paste the raw token value only; the plugin adds the `Bearer` prefix automatically.
+
+Use the DKG API base URL in the plugin:
+
+```text
+http://127.0.0.1:9200
+```
+
+Do not use the dashboard URL (`http://127.0.0.1:9200/ui`) as the plugin's node URL.
+
+Base Sepolia ETH/TRAC and wallet funding are not required for this plugin's default Working Memory import flow. They matter later for Verified Memory publishing or staking, which this MVP does not perform.
 
 > If you are already using Hermes or OpenClaw, the DKG repo also supports framework-specific setup commands such as `dkg hermes setup` and `dkg openclaw setup`. For this Obsidian plugin, the important part is that the local DKG API is reachable at `http://127.0.0.1:9200` and you have an auth token.
 
@@ -121,7 +131,7 @@ You have two options.
 
 ### Option A — download ZIP, no build step
 
-Use this if you do not want to develop the plugin.
+Use this if you do not want to develop the plugin. For this MVP, this means downloading the repository source ZIP and copying only the Obsidian plugin artifacts from it. If `main.js`, `manifest.json`, or `styles.css` are missing, use Option B and build from source.
 
 1. Open <https://github.com/Zigoljube/Obsidian-OriginTrail-Shared-Memory>.
 2. Click **Code → Download ZIP**.
@@ -200,6 +210,19 @@ cp /path/to/Obsidian-OriginTrail-Shared-Memory/main.js \
    "/path/to/Your Vault/.obsidian/plugins/origintrail-shared-memory/"
 ```
 
+### Windows PowerShell example
+
+Replace the two paths with your real vault and plugin checkout paths:
+
+```powershell
+$vault = "C:\path\to\Your Vault"
+$plugin = "C:\path\to\Obsidian-OriginTrail-Shared-Memory"
+$target = Join-Path $vault ".obsidian\plugins\origintrail-shared-memory"
+
+New-Item -ItemType Directory -Force $target | Out-Null
+Copy-Item "$plugin\main.js", "$plugin\manifest.json", "$plugin\styles.css" $target
+```
+
 ---
 
 ## 6. Enable the plugin in Obsidian
@@ -213,6 +236,8 @@ cp /path/to/Obsidian-OriginTrail-Shared-Memory/main.js \
 ```text
 OriginTrail Shared Memory
 ```
+
+If the first-run prompt appears before you have configured DKG, click **Open settings** or **Maybe later**. Power up the vault only after the connection test succeeds.
 
 If you do not see it:
 
@@ -231,10 +256,10 @@ In Obsidian:
 
 ```text
 DKG node URL: http://127.0.0.1:9200
-Auth token:  paste the output from dkg auth show
+Auth token:  paste the raw token from dkg auth show, without Bearer
 ```
 
-3. Click **Test**.
+3. Click **Test connection**.
 
 Expected result:
 
@@ -247,6 +272,8 @@ OriginTrail DKG connection OK
 ## 8. Power up your vault
 
 Once the plugin is enabled, an unlinked vault will offer to be powered up.
+
+For a first test, use a small vault or a few harmless Markdown notes. Powering up imports all Markdown files except Obsidian internals and trash folders.
 
 You can either:
 
@@ -268,6 +295,14 @@ Powering up does this:
 4. Imports existing Markdown notes into DKG **Working Memory**.
 5. Enables auto-sync for future saved Markdown notes.
 6. Keeps **Shared Memory** promotion off until you enable it.
+
+Expected success signal:
+
+```text
+DKG Project linked: <project-id>. Synced <N> notes to Working Memory.
+```
+
+The Obsidian status bar should then show the linked project, memory layer, and auto-sync state.
 
 ---
 
@@ -323,6 +358,25 @@ dkg auth show
 ```
 
 Paste that token into the plugin settings.
+
+Make sure the plugin URL is the API base URL:
+
+```text
+http://127.0.0.1:9200
+```
+
+Do not paste `http://127.0.0.1:9200/ui` into the DKG node URL setting.
+
+If you see a 401 or authorization error, paste only the raw token from `dkg auth show`. Do not add `Bearer` yourself.
+
+PowerShell verification:
+
+```powershell
+$base = "http://127.0.0.1:9200"
+$token = (dkg auth show | Select-Object -First 1)
+Invoke-RestMethod "$base/api/status"
+Invoke-RestMethod "$base/api/agent/identity" -Headers @{ Authorization = "Bearer $token" }
+```
 
 ### I created a new vault but the plugin is missing
 

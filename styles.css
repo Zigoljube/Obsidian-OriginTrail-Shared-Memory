@@ -5,3 +5,32 @@
 .origintrail-sm-muted {
   color: var(--text-muted);
 }
+
+.origintrail-sm-panel {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  margin: 12px 0 18px;
+  padding: 12px;
+  background: var(--background-secondary);
+}
+
+.origintrail-sm-panel-title {
+  color: var(--text-normal);
+  font-weight: var(--font-semibold);
+  margin-bottom: 4px;
+}
+
+.origintrail-sm-section-title {
+  border-bottom: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
+  font-size: var(--font-ui-medium);
+  margin: 20px 0 8px;
+  padding-bottom: 6px;
+}
+
+.origintrail-sm-node-url {
+  color: var(--text-muted);
+  font-family: var(--font-monospace);
+  font-size: var(--font-ui-smaller);
+  word-break: break-all;
+}

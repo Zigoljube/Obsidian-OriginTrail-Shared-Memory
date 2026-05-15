@@ -42,6 +42,12 @@ export default class OriginTrailSharedMemoryPlugin extends Plugin {
       }
     });
 
+    this.addCommand({
+      id: "open-dkg-dashboard",
+      name: "Open DKG dashboard",
+      callback: () => this.openDkgDashboard()
+    });
+
     this.registerEvent(this.app.vault.on("modify", (file) => {
       if (file instanceof TFile) this.scheduleAutoSync(file);
     }));
@@ -72,22 +78,45 @@ export default class OriginTrailSharedMemoryPlugin extends Plugin {
 
   updateStatusBar() {
     if (!this.statusBarEl) return;
-    const project = this.settings.defaultContextGraphId || "unlinked";
+    if (!this.settings.defaultContextGraphId) {
+      const setup = this.settings.authToken.trim() ? "ready to link" : "setup needed";
+      this.statusBarEl.setText(`OriginTrail: ${setup}`);
+      return;
+    }
+
+    const project = this.settings.defaultContextGraphId;
     const layer = this.settings.autoPromote ? "Shared Memory" : "Working Memory";
     const sync = this.settings.autoSync ? "auto-sync on" : "auto-sync off";
-    this.statusBarEl.setText(`DKG: ${project} · ${layer} · ${sync}`);
+    this.statusBarEl.setText(`OriginTrail: ${project} | ${layer} | ${sync}`);
   }
 
   async testConnection() {
     try {
       const client = this.client();
       await client.status();
-      if (this.settings.authToken.trim()) await client.identity();
+      if (!this.settings.authToken.trim()) {
+        new Notice("OriginTrail DKG node is reachable. Add the auth token before linking a vault.", 10000);
+        this.updateStatusBar();
+        return;
+      }
+
+      await client.identity();
       new Notice("OriginTrail DKG connection OK");
+      this.updateStatusBar();
     } catch (error) {
       console.error(error);
       new Notice(`OriginTrail DKG connection failed: ${errorMessage(error)}`, 10000);
     }
+  }
+
+  openDkgDashboard() {
+    window.open(dkgDashboardUrl(this.settings.dkgNodeUrl), "_blank", "noopener");
+  }
+
+  openSettings() {
+    const setting = (this.app as any).setting;
+    setting?.open?.();
+    setting?.openTabById?.(this.manifest.id);
   }
 
   async createProjectFromVaultAndSyncNotes() {
@@ -96,7 +125,13 @@ export default class OriginTrailSharedMemoryPlugin extends Plugin {
     const client = this.client();
 
     try {
-      new Notice(`Creating/linking DKG Project “${vaultName}”…`);
+      new Notice("Checking OriginTrail DKG connection...");
+      await client.status();
+      if (!this.settings.authToken.trim()) {
+        new Notice("No DKG auth token is set. If your node requires auth, add it in settings before continuing.", 7000);
+      }
+
+      new Notice(`Creating/linking DKG Project "${vaultName}"...`);
       const graph = await client.ensureContextGraph(contextGraphId, vaultName);
       this.settings.defaultContextGraphId = graph.id || contextGraphId;
       this.settings.autoSync = true;
@@ -104,28 +139,30 @@ export default class OriginTrailSharedMemoryPlugin extends Plugin {
       await this.saveSettings();
       this.updateStatusBar();
 
-      new Notice(`Syncing Markdown notes to DKG Working Memory…`);
+      new Notice("Syncing Markdown notes to DKG Working Memory...");
       const results = await syncAllMarkdownFiles(
         this.app,
         client,
         this.settings.defaultContextGraphId,
         this.settings.vaultId,
         this.settings.autoPromote,
-        (done, total, file) => {
-          if (done === 0 || done % 5 === 0) new Notice(`DKG sync ${done + 1}/${total}: ${file.path}`, 2500);
+        (done, total) => {
+          this.statusBarEl.setText(`OriginTrail: syncing ${done + 1}/${total}`);
         }
       );
 
       new Notice(`DKG Project linked: ${this.settings.defaultContextGraphId}. Synced ${results.length} notes to ${this.settings.autoPromote ? "Shared Memory" : "Working Memory"}.`, 10000);
+      this.updateStatusBar();
     } catch (error) {
       console.error(error);
       new Notice(`Create/sync failed: ${errorMessage(error)}`, 12000);
+      this.updateStatusBar();
     }
   }
 
   async syncFile(file: TFile) {
     if (!this.settings.defaultContextGraphId) {
-      new Notice("This vault is not powered up yet. Run “Power up current vault with OriginTrail Shared Memory” first.");
+      new Notice("This vault is not linked yet. Run \"OriginTrail Shared Memory: Power up current vault with OriginTrail Shared Memory\" first.");
       return;
     }
     if (file.extension !== "md" || shouldSkipPath(file.path)) return;
@@ -173,16 +210,36 @@ class PowerUpModal extends Modal {
 
   onOpen() {
     const { contentEl } = this;
+    const hasAuthToken = this.plugin.settings.authToken.trim().length > 0;
     contentEl.empty();
     contentEl.createEl("h2", { text: "Power up this vault with OriginTrail Shared Memory" });
     contentEl.createEl("p", {
-      text: "Create an OriginTrail DKG Project with this vault’s name and sync Markdown notes into DKG Working Memory. Shared Memory promotion stays off until you enable it."
+      text: "Create or link an OriginTrail DKG Project with this vault's name, then sync Markdown notes into DKG Working Memory."
     });
+    contentEl.createEl("p", {
+      text: hasAuthToken
+        ? "Connection settings look ready. Test the connection first if this is your first setup."
+        : "Add your DKG auth token in settings and test the connection before importing notes."
+    }).addClass("origintrail-sm-muted");
+
+    contentEl.createEl("p", {
+      text: `DKG node: ${this.plugin.settings.dkgNodeUrl}`
+    }).addClass("origintrail-sm-node-url");
 
     new Setting(contentEl)
       .addButton((button) => button
-        .setButtonText("Power up vault")
+        .setButtonText("Open settings")
         .setCta()
+        .onClick(() => {
+          this.close();
+          this.plugin.openSettings();
+        }))
+      .addButton((button) => button
+        .setButtonText("Test connection")
+        .onClick(() => this.plugin.testConnection()))
+      .addButton((button) => button
+        .setButtonText("Power up vault")
+        .setTooltip("Imports Markdown notes into DKG Working Memory.")
         .onClick(async () => {
           this.close();
           await this.plugin.createProjectFromVaultAndSyncNotes();
@@ -203,4 +260,8 @@ class PowerUpModal extends Modal {
 
 function errorMessage(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
+}
+
+function dkgDashboardUrl(baseUrl: string): string {
+  return `${baseUrl.replace(/\/+$/, "")}/ui`;
 }

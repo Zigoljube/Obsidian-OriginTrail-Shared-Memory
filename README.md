@@ -61,18 +61,30 @@ That guide covers:
 - configuring the DKG connection
 - powering up a vault into a DKG Project
 
+## MVP setup checklist
+
+Before you power up a vault, confirm:
+
+- Obsidian desktop is installed and your test vault is open.
+- The local DKG node is running at `http://127.0.0.1:9200`.
+- The DKG dashboard opens at `http://127.0.0.1:9200/ui`.
+- You have the raw auth token from `dkg auth show`.
+- The plugin files `main.js`, `manifest.json`, and `styles.css` are copied into this vault's plugin folder and the plugin is enabled.
+
+Use the API base URL in plugin settings: `http://127.0.0.1:9200`. Do not paste the `/ui` dashboard URL. Paste only the token value from `dkg auth show`; the plugin adds `Bearer` automatically.
 
 ## MVP flow
 
 1. Open or create an Obsidian vault.
 2. Configure the local DKG node URL and auth token in plugin settings.
-3. Run **OriginTrail Shared Memory: Power up current vault with OriginTrail Shared Memory** or click **Power up vault** in settings.
+3. Click **Test connection** and confirm Obsidian reports `OriginTrail DKG connection OK`.
+4. Run **OriginTrail Shared Memory: Power up current vault with OriginTrail Shared Memory** or click **Power up vault** in settings.
 
    ![Power up vault prompt in Obsidian](docs/images/power-up-vault-prompt.jpg)
 
-4. The plugin creates or links a DKG Project using the vault name.
-5. Existing Markdown notes are imported into DKG **Working Memory**.
-6. Optional: enable promotion to **Shared Memory** after the Working Memory path is verified.
+5. The plugin creates or links a DKG Project using the vault name.
+6. Existing Markdown notes are imported into DKG **Working Memory**.
+7. Optional: enable promotion to **Shared Memory** after the Working Memory path is verified.
 
 Unlinked vaults show a first-run prompt that offers to power up the vault without automatically ingesting notes before the user opts in.
 
