@@ -20,6 +20,47 @@ That guide covers:
 - configuring the DKG connection
 - powering up a vault into a DKG Project
 
+## Why use it?
+
+Obsidian is already one of the best tools for building a personal knowledge base:
+a second brain where notes, ideas, references, and insights compound over time.
+
+The Obsidian OriginTrail Shared Memory plugin takes that further. It helps turn a
+private second brain into part of a broader, verifiable knowledge network, moving
+from personal memory toward collective intelligence.
+
+> Intelligence is power.
+> Intelligence shared is power multiplied.
+
+A second brain helps one person remember, connect, and reason with their own
+knowledge. Shared memory helps people, teams, communities, and AI agents build on
+knowledge together.
+
+With OriginTrail's Decentralized Knowledge Graph, selected knowledge from an
+Obsidian vault can become more than isolated notes. It can become structured,
+linked, provenance-aware knowledge that others can discover, verify, and reuse.
+
+This enables:
+
+- **Personal knowledge that can become shared knowledge** - keep your Obsidian
+  workflow local-first, while choosing what knowledge should be published or
+  connected.
+- **Verifiable context for humans and AI agents** - knowledge can carry
+  provenance, making it easier to understand where information came from and why
+  it should be trusted.
+- **Better coordination across teams and communities** - replace scattered
+  documents, messages, and repeated explanations with a reusable knowledge layer.
+- **A bridge between note-taking and decentralized knowledge infrastructure** -
+  Obsidian remains the thinking interface, while OriginTrail provides the trust
+  and knowledge graph layer.
+
+Traditional note-taking asks: **What do I know?**
+
+Shared memory asks: **What can we know, trust, and build together?**
+
+The future of knowledge work is not just better private notes. It is shared,
+verifiable intelligence.
+
 ## MVP flow
 
 1. Open or create an Obsidian vault.
