@@ -66,6 +66,9 @@ verifiable intelligence.
 1. Open or create an Obsidian vault.
 2. Configure the local DKG node URL and auth token in plugin settings.
 3. Run **OriginTrail Shared Memory: Power up current vault with OriginTrail Shared Memory** or click **Power up vault** in settings.
+
+   ![Power up vault prompt in Obsidian](docs/images/power-up-vault-prompt.jpg)
+
 4. The plugin creates or links a DKG Project using the vault name.
 5. Existing Markdown notes are imported into DKG **Working Memory**.
 6. Optional: enable promotion to **Shared Memory** after the Working Memory path is verified.
