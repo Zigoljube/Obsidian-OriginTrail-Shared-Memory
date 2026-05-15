@@ -105,6 +105,22 @@ Once the vault is powered up, auto-sync is enabled for that vault.
 
 This means every saved edit can become a new memory update in the vault's DKG Context Graph. Obsidian stays local-first and comfortable for writing, while OriginTrail DKG keeps receiving the latest knowledge from the vault.
 
+## Sharing access to the Context Graph
+
+After the vault has been powered up and synced, the created DKG Context Graph can become a shared knowledge space.
+
+The Obsidian vault stays local to the user. The DKG Context Graph is the shareable project layer created from that vault. From there, the owner can invite or grant access to other people, teams, apps, or AI agents so they can work with the same trusted context.
+
+In practice, this means:
+
+- the user keeps writing and editing in their own Obsidian vault
+- the DKG Context Graph becomes the project space that can be shared
+- collaborators can be given access to the Context Graph instead of receiving copied notes manually
+- promoted knowledge can become **Shared Memory** for that project
+- teams and agents can build on the same continuously updated context as the vault evolves
+
+This is where a personal second brain can become shared memory: start locally in Obsidian, power up the vault into a DKG Project, sync notes into memory, keep edits flowing into the graph, and then share access to that Context Graph with others.
+
 ## Development
 
 ```bash
