@@ -3,120 +3,7 @@
 
 Obsidian plugin for turning an Obsidian vault into an OriginTrail DKG v10 Project and syncing Markdown notes into DKG memory.
 
-![OriginTrail Shared Memory plugin running in Obsidian](docs/images/obsidian-origintrail-shared-memory.png)
-
-## Start here
-
-If you are new to Obsidian, OriginTrail DKG, or both, follow the full beginner journey:
-
-[Fresh user journey: Obsidian + OriginTrail DKG + Shared Memory plugin](INSTALL.md)
-
-That guide covers:
-
-- installing Obsidian
-- installing and starting OriginTrail DKG v10 from <https://github.com/OriginTrail/dkg>
-- installing this plugin into a vault
-- configuring the DKG connection
-- powering up a vault into a DKG Project
-
-## Already use Obsidian?
-
-If you already have an Obsidian vault, you can add this plugin directly to that
-vault and connect it to a local OriginTrail DKG v10 node.
-
-### 1. Start OriginTrail DKG
-
-Install and start a local DKG node:
-
-```bash
-npm install -g @origintrail-official/dkg
-dkg init
-dkg start
-```
-
-The default local API is:
-
-```text
-http://127.0.0.1:9200
-```
-
-Get the auth token you will paste into Obsidian:
-
-```bash
-dkg auth show
-```
-
-### 2. Download or build this plugin
-
-For a quick install, download this repository as a ZIP from GitHub and unzip it.
-For development, clone and build it:
-
-```bash
-git clone https://github.com/Zigoljube/Obsidian-OriginTrail-Shared-Memory.git
-cd Obsidian-OriginTrail-Shared-Memory
-npm install -g pnpm
-pnpm install
-pnpm build
-```
-
-The plugin files Obsidian needs are:
-
-```text
-main.js
-manifest.json
-styles.css
-```
-
-### 3. Install it into your vault
-
-Create the plugin folder inside your existing vault:
-
-```text
-Your Vault/
-  .obsidian/
-    plugins/
-      origintrail-shared-memory/
-```
-
-Copy these files from this repository into that folder:
-
-```text
-main.js
-manifest.json
-styles.css
-```
-
-On macOS or Linux:
-
-```bash
-mkdir -p "/path/to/Your Vault/.obsidian/plugins/origintrail-shared-memory"
-cp main.js manifest.json styles.css \
-  "/path/to/Your Vault/.obsidian/plugins/origintrail-shared-memory/"
-```
-
-### 4. Enable and configure it
-
-1. Open Obsidian.
-2. Go to **Settings -> Community plugins**.
-3. Turn off **Restricted mode** if Obsidian asks.
-4. Enable **OriginTrail Shared Memory**.
-5. Open the plugin settings.
-6. Set the DKG node URL to `http://127.0.0.1:9200`.
-7. Paste the auth token from `dkg auth show`.
-
-### 5. Power up your vault
-
-Run the command:
-
-```text
-OriginTrail Shared Memory: Power up current vault with OriginTrail Shared Memory
-```
-
-Or click **Power up vault** in the plugin settings.
-
-The plugin creates or links a DKG Project using your vault name, then imports
-Markdown notes into DKG **Working Memory**. Promotion to **Shared Memory** is
-optional and disabled by default.
+<img width="1672" height="941" alt="ChatGPT Image May 15, 2026 at 01_19_06 PM" src="https://github.com/user-attachments/assets/3c154fc8-c2de-4f2e-9d3b-13be73e44d02" />
 
 ## Why use it?
 
@@ -159,6 +46,22 @@ Shared memory asks: **What can we know, trust, and build together?**
 The future of knowledge work is not just better private notes. It is shared,
 verifiable intelligence.
 
+
+## Start here
+
+If you are new to Obsidian, OriginTrail DKG, or both, follow the full beginner journey:
+
+[Fresh user journey: Obsidian + OriginTrail DKG + Shared Memory plugin](INSTALL.md)
+
+That guide covers:
+
+- installing Obsidian
+- installing and starting OriginTrail DKG v10 from <https://github.com/OriginTrail/dkg>
+- installing this plugin into a vault
+- configuring the DKG connection
+- powering up a vault into a DKG Project
+
+
 ## MVP flow
 
 1. Open or create an Obsidian vault.
@@ -200,7 +103,7 @@ Once the vault is powered up, auto-sync is enabled for that vault.
 - Each synced note version gets a content-aware assertion name derived from the vault ID, note path, note content, and sync timestamp.
 - By default, updates go to **Working Memory** first. If Shared Memory promotion is enabled, the assertion is also promoted to **Shared Memory**.
 
-![Obsidian edit syncing into DKG memory](docs/images/edit-sync-cycle.jpg)
+- <img width="1280" height="656" alt="photo_2026-05-15_17-22-38" src="https://github.com/user-attachments/assets/2f4e5614-28b5-41b2-9e5b-f2e1dcde4bff" />
 
 
 This means every saved edit can become a new memory update in the vault's DKG Context Graph. Obsidian stays local-first and comfortable for writing, while OriginTrail DKG keeps receiving the latest knowledge from the vault.
@@ -219,7 +122,7 @@ In practice, this means:
 - promoted knowledge can become **Shared Memory** for that project
 - teams and agents can build on the same continuously updated context as the vault evolves
 
-![Sharing access to the DKG Context Graph](docs/images/context-graph-sharing.jpg)
+- <img width="1280" height="659" alt="photo_2026-05-15_17-22-38 (2)" src="https://github.com/user-attachments/assets/3a97a73c-edf6-4966-b0aa-070dd6bd7dae" />
 
 
 This is where a personal second brain can become shared memory: start locally in Obsidian, power up the vault into a DKG Project, sync notes into memory, keep edits flowing into the graph, and then share access to that Context Graph with others.
